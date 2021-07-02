@@ -21,6 +21,31 @@ export const theme = extendTheme({
     heading: 'Archivo',
     body: 'Inter'
   },
+  components: {
+    Button: {
+      baseStyle: {
+        py: '5',
+        borderRadius: 'lg',
+        fontWeight: 'medium',
+      },
+      defaultProps: {
+        colorScheme: 'red',
+      },
+    },
+    Container: {
+      baseStyle: {
+        maxW: 1120,
+      },
+      variants: {
+        center: {
+          d: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'space-between',
+        },
+      },
+    },
+  },
   styles: {
     global: {
       bg: 'gray.50',

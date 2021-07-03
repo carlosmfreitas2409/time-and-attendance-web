@@ -11,13 +11,24 @@ import {
   FormLabel,
 } from '@chakra-ui/react';
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri';
+import InputMask from 'react-input-mask';
 
 interface InputProps extends ChakraInputProps {
   name: string;
   icon?: ElementType;
+  mask?: string | Array<(string | RegExp)>;
+  maskChar?: string | null;
 }
 
-export function Input({ name, icon, placeholder, type, ...rest }: InputProps) {
+export function Input({
+  name,
+  icon,
+  mask = undefined,
+  maskChar = null,
+  placeholder,
+  type,
+  ...rest
+}: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +60,10 @@ export function Input({ name, icon, placeholder, type, ...rest }: InputProps) {
       <Box position="relative" w="100%">
         <ChakraInput
           ref={inputRef}
-          type={type === 'password' && (showPassword ? 'text' : 'password')}
+          as={mask && InputMask}
+          mask={mask}
+          maskChar={maskChar}
+          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
           name={name}
           placeholder=" "
           h="16"

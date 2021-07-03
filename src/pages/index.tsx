@@ -1,9 +1,23 @@
+import { useState } from 'react';
 import { Container, Box, Button, Flex, Heading, Img, Text, HStack, Input, Icon } from '@chakra-ui/react';
 import { FiLogIn } from 'react-icons/fi';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const [matriculation, setMatriculation] = useState('');
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
+
+  const navigation = useRouter();
+
+  function handleSubmitMatriculation() {
+    if(!matriculation) return;
+
+    setIsLoadingButton(true);
+    navigation.push(`/${matriculation}/register`);
+  }
+
   return (
     <>
       <Head>
@@ -15,7 +29,7 @@ export default function Home() {
           <Flex justify="space-between" align="center">
             <Img src="/logotipo.svg" alt="Time &amp; Attendance" />
 
-            <Link href="/login" passHref>
+            <Link href="/admin/login" passHref>
               <Button
                 as="a"
                 fontSize="lg"
@@ -53,6 +67,7 @@ export default function Home() {
               </Text>
 
               <Input
+                type="number"
                 w={357}
                 h="100%"
                 mt="10"
@@ -70,11 +85,19 @@ export default function Home() {
                 _placeholder={{
                   color: 'gray.400'
                 }}
+                value={matriculation}
+                onChange={(event) => setMatriculation(event.target.value)}
               />
 
-              <Button mt="6" w={357} h="100%">
+              <Button
+                mt="6"
+                w={357}
+                h="100%"
+                isLoading={isLoadingButton}
+                onClick={handleSubmitMatriculation}
+              >
                 <Icon as={FiLogIn} boxSize="5" color="white" mr="2.5" />
-                Registrar
+                Começar
               </Button>
             </Box>
 
